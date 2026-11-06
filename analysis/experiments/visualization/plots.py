@@ -109,6 +109,8 @@ def plot_drop_comparison(
                 fontweight="bold",
                 color="coral",
             )
+    # Keep stars above the tallest bar inside the axes (they were clipped otherwise)
+    ax.set_ylim(top=max(v + e for v, e in zip(ling_values + cont_values, ling_err + cont_err)) + 6)
     
     ax.set_xlabel("Model")
     ax.set_ylabel("Drop value")

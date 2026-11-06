@@ -67,7 +67,8 @@ Located in `scripts/metaeval/`:
 | `analyze_judge_calibration.py` | Single-judge F1/κ table (Appendix `tab:judge_perf`) |
 | `analyze_judge_panel_kappa.py` | Per-variant κ table (Appendix `tab:per_variant_kappa`) |
 | `analyze_harm_classifier_calibration.py` | Dimension-classifier κ (κ=0.592 in main text, `tab:dim_classifier_perf`) |
-| `analyze_domain_drops.py` | Domain-stratified ΔLing / ΔCtx with bootstrap CIs (paper figure `fig_domain_drops.pdf`) |
+| `domain_drops.py` | Domain-stratified ΔLing (CA), ΔLing (CS), ΔCtx with bootstrap CIs (paper Table 18, `fig_domain_drops.pdf`) |
+| `recompute_ling_ctx_drops.py` | Headline culture-specific ΔLing / ΔCtx (9.19 vs 3.47 pp, 2.65×) under every aggregation |
 | `prepare_judge_calibration_data.py` | Prepare calibration set inputs |
 | `sample_meta_eval_dataset.py`, `sample_meta_eval_with_all_variants.py` | Sample the 97-task / 266-task-variant calibration set |
 | `dedup_models.py` | De-duplicate model variant entries (used by the `analyze_*` scripts) |

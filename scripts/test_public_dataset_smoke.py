@@ -13,7 +13,7 @@ PUBLIC_TSV = REPO_ROOT / "data" / "rok_fortress_public.tsv"
 
 
 def main() -> None:
-    assert PUBLIC_TSV.exists(), f"public TSV missing at {PUBLIC_TSV}"
+    assert PUBLIC_TSV.exists(), f"public TSV missing at {PUBLIC_TSV}; download it from Hugging Face (see README, Dataset)"
 
     variants = load_and_expand_csv(str(PUBLIC_TSV))
     assert variants, "loader returned no variants"

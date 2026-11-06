@@ -43,7 +43,7 @@ This directory contains the public ROK-FORTRESS evaluation dataset.
 
 ## Files
 
-- `rok_fortress_public.tsv` — 791 adversarial tasks across 4 NSPS risk domains, with English/Korean translations and US/Korean cultural adaptations.
+- `rok_fortress_public.tsv` (download from Hugging Face; not bundled in git) — 791 adversarial tasks across 4 NSPS risk domains, with English/Korean translations and US/Korean cultural adaptations.
 - `croissant.json` — Croissant ML dataset metadata (schema, provenance, calibration κ values).
 
 ## Schema

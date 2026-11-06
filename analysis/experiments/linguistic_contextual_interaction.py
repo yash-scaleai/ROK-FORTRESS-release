@@ -506,8 +506,9 @@ class InteractionAnalysis(BaseExperiment):
                 # Position the asterisk at the end of the bar (plus CI if available)
                 offset = (interaction_ci[i] + 1) if has_ci else 1
                 x_pos = val + offset if val >= 0 else val - offset
-                ax2.annotate("*", xy=(x_pos, i), ha="left" if val >= 0 else "right", 
-                            va="center", fontsize=14, fontweight="bold", color=colors[i])
+                ax2.annotate("*", xy=(x_pos, i), ha="left" if val >= 0 else "right",
+                            va="center", fontsize=14, fontweight="bold", color=colors[i],
+                            annotation_clip=False)
         
         # Add legend
         from matplotlib.patches import Patch

@@ -25,7 +25,13 @@ Across the frontier and Korean regional models we evaluated, we observe:
 
 ## Dataset
 
-The full public dataset is hosted on Hugging Face: <https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public>. A copy is also bundled in this repo at `data/rok_fortress_public.tsv` for one-shot reproducibility.
+The public dataset is hosted on Hugging Face: <https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public>. Download it to `data/rok_fortress_public.tsv`, the path every script expects:
+
+```bash
+# Gated dataset: accept the terms on the Hugging Face page, then log in once (`hf auth login`).
+uv run --with huggingface_hub hf download ScaleAI/ROK-FORTRESS_public rok_fortress_public.tsv \
+  --repo-type dataset --local-dir data
+```
 
 **791 adversarial tasks** across 4 NSPS risk domains:
 
@@ -103,7 +109,7 @@ litellm --config configs/litellm-proxy.example.yaml --port 4000
 
 ## Reproducibility
 
-The public 791-task dataset (`data/rok_fortress_public.tsv`) drives the entire pipeline. The paper used the four-stage flow below; intermediate outputs are written to `runs/` and consumed by the next stage.
+The public 791-task dataset (`data/rok_fortress_public.tsv`, downloaded from Hugging Face as shown under [Dataset](#dataset)) drives the entire pipeline. The paper used the four-stage flow below; intermediate outputs are written to `runs/` and consumed by the next stage.
 
 ### Stage 1 — Collect model responses
 
@@ -183,7 +189,7 @@ Each figure has its own producer script under `analysis/`:
 | `fig_quadrant_overall.pdf` | `analysis/experiments/figures/gen_ars_ors_quadrant.py` |
 | `fig_tactic_heatmap_*.pdf` | `analysis/experiments/figures/gen_model_tactic_heatmap.py` |
 | `fig_cross_variant_panel_analysis.pdf` | `analysis/experiments/figures/gen_cross_variant_panel_analysis.py` |
-| `fig_domain_drops.pdf` | `scripts/metaeval/analyze_domain_drops.py` |
+| `fig_domain_drops.pdf` | `scripts/metaeval/domain_drops.py` |
 | `gap_comparison.png`, `urs_by_language.png` (MultiJail baseline) | `analysis/experiments/multijail_baseline/plots.py` |
 
 All figures land in `analysis/experiments/figures/` (or each script's `--output` flag).

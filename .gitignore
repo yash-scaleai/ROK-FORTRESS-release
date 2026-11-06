@@ -25,7 +25,6 @@ refs/
 
 # Data: ignore everything except the public release files
 data/*
-!data/rok_fortress_public.tsv
 !data/README.md
 !data/croissant.json
 

@@ -9,10 +9,10 @@ Creates a vertically stacked two-panel bar chart with:
 - Y-axis: Weighted ARS / TRS
 
 Usage:
-    python -m analysis_scripts.experiments.TRS_by_variant
+    python -m analysis.experiments.TRS_by_variant
     
     # With custom output path
-    python -m analysis_scripts.experiments.TRS_by_variant \
+    python -m analysis.experiments.TRS_by_variant \
         --output results/TRS_by_variant/TRS_by_variant.png
 """
 

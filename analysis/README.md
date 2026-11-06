@@ -28,7 +28,7 @@ analysis/
     └── entity_mappings.py                  # Korean entity → display name maps
 ```
 
-`scripts/metaeval/analyze_domain_drops.py` (under `scripts/`, not `analysis/`) produces `fig_domain_drops.pdf`. The judge / harm-classifier calibration scripts under `scripts/metaeval/` produce the calibration tables in the appendix.
+`scripts/metaeval/domain_drops.py` (under `scripts/`, not `analysis/`) produces `fig_domain_drops.pdf` (Table 18). The judge / harm-classifier calibration scripts under `scripts/metaeval/` produce the calibration tables in the appendix.
 
 ## Running
 

@@ -31,3 +31,8 @@ Dataset = "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public"
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.6"]
 
+
+[tool.uv]
+# Security overrides: litellm caps filelock<4 and vllm caps setuptools<81, but the
+# fixed releases are filelock>=4.2.1 and setuptools>=84.1 (pip-audit, 2026-11-06).
+override-dependencies = ["filelock>=4.2.1", "setuptools>=84.1"]

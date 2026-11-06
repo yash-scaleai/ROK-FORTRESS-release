@@ -51,6 +51,10 @@ from .metrics.harm_scores import compute_harm_score_for_result
 from .metrics.alignment_metrics import compute_drop, DropResult
 
 
+# 1k resamples cannot resolve p near the Bonferroni threshold (0.05/14 = 0.0036).
+N_BOOTSTRAP = 100_000
+
+
 def bonferroni_correction(pvalues: List[float], alpha: float = 0.05) -> List[bool]:
     """Bonferroni family-wise error correction.
 
@@ -252,7 +256,7 @@ class InteractionAnalysis(BaseExperiment):
         self,
         results: List[ConsolidatedResult],
         use_weights: bool = True,
-        n_bootstrap: int = 1000,
+        n_bootstrap: int = N_BOOTSTRAP,
         confidence: float = 0.95,
         random_seed: int = 42,
     ) -> Tuple[Tuple[float, float], bool, float]:
@@ -355,7 +359,7 @@ class InteractionAnalysis(BaseExperiment):
         self,
         results: List[ConsolidatedResult],
         use_weights: bool = True,
-        n_bootstrap: int = 1000,
+        n_bootstrap: int = N_BOOTSTRAP,
     ) -> InteractionResult:
         """
         Compute interaction result with bootstrapped CI for the interaction term.
@@ -582,7 +586,7 @@ class InteractionAnalysis(BaseExperiment):
             results = data[model]
             
             # Compute interaction with bootstrapped CI (weighted)
-            interaction = self.compute_interaction_with_ci(results, use_weights=True, n_bootstrap=1000)
+            interaction = self.compute_interaction_with_ci(results, use_weights=True, n_bootstrap=N_BOOTSTRAP)
             model_interactions[model] = interaction
             
             # Print summary with CI
@@ -754,7 +758,7 @@ class InteractionAnalysis(BaseExperiment):
             "  - Positive: Context MITIGATES suppression (less conservative in KR context)",
             "  - Negative: Context AMPLIFIES suppression (more conservative in KR context)",
             "",
-            "**Significance Testing**: 95% CI computed via 1000 bootstrap iterations.",
+            f"**Significance Testing**: 95% CI computed via {N_BOOTSTRAP:,} bootstrap iterations.",
             "Interaction is significant if CI excludes zero.",
             "",
             "## Model Classifications",

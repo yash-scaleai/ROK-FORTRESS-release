@@ -1,0 +1,661 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "equivalentProperty": "cr:equivalentProperty",
+    "samplingRate": "cr:samplingRate",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "rok-fortress",
+  "description": "ROK-FORTRESS is a bilingual safety benchmark of 791 adversarial tasks across 4 NSPS risk domains (CBRNE; Political Violence & Terrorism; Criminal & Financial Illicit Activities; Information Leakage). Each task is provided with English/Korean translations and US/Korean cultural adaptations, supporting a transcreation matrix that disentangles the effects of language and geopolitical grounding on LLM safety. Culture-agnostic tasks (359) yield 2 variants per task (V_En, V_Ko); culture-specific tasks (432) yield 4 variants per task (V_En_US, V_Ko_US, V_En_KR, V_Ko_KR).",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public",
+  "version": "1.0.0",
+  "datePublished": "2026-05-06",
+  "keywords": [
+    "LLM safety",
+    "red-teaming",
+    "adversarial prompts",
+    "Korean",
+    "bilingual",
+    "transcreation",
+    "national security",
+    "public safety",
+    "CBRNE",
+    "FORTRESS"
+  ],
+  "inLanguage": [
+    "en",
+    "ko"
+  ],
+  "citeAs": "@inproceedings{lee2026rokfortress, title={{ROK-FORTRESS}: Measuring the Effect of Geopolitical Transcreation for National Security and Public Safety}, author={Michael S. Lee and Yash Maurya and Drew Rein and Bert Herring and Jonathan Nguyen and Kyungho Song and Udari Madhushani Sehwag and Jiyeon Cho and Kaustubh Deshpande and Yeongkyun Jang and Jiyeon Joo and Minn Seok Choi and Evi Fuelle and Christina Q. Knight and Joseph Brandifino and Max Fenkell}, booktitle={Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track}, year={2026}, eprint={2605.14152}, archivePrefix={arXiv}}",
+  "rai:dataCollection": "Adversarial tasks were authored by the ROK-FORTRESS team following the NSPS risk taxonomy (CBRNE, Political Violence & Terrorism, Criminal & Financial Illicit Activities, Information Leakage). Each task carries an English (US-context) source prompt, a benign counterpart, a simplified direct-request variant, and a 1-7 binary YES/NO rubric. Tasks are expanded along a transcreation matrix: (i) Korean-language translations of the US-context prompt for all tasks, and (ii) for culture-specific tasks only, English Korean-context cultural adaptations and Korean-language Korean-context transcreations. All adversarial prompts, benign prompts, translations, transcreations, and rubrics are human-authored. The 'Simplified Direct Request Variant' columns (one per language/culture variant) are LLM-generated short paraphrases that were subsequently reviewed and corrected by human annotators. Construction extends the FORTRESS benchmark (https://arxiv.org/pdf/2506.14922).",
+  "rai:dataCollectionType": [
+    "Manual Human Curated",
+    "Machine-generated then human-reviewed (simplified direct-request variants only)"
+  ],
+  "rai:dataCollectionTimeframe": [
+    "2025-10-01",
+    "2026-01-31"
+  ],
+  "rai:dataCollectionRawData": "Built on the FORTRESS benchmark (Dong et al., https://arxiv.org/pdf/2506.14922 / dataset: https://huggingface.co/datasets/ScaleAI/fortress_public), which provides the underlying NSPS adversarial-task design methodology. ROK-FORTRESS extends FORTRESS with Korean-language translations and Korean-context cultural transcreations.",
+  "rai:hasSyntheticData": true,
+  "rai:syntheticDataDescription": "Synthetic content is restricted to the four 'Simplified Direct Request Variant' columns (English US-context, Korean US-context, English Korean-context, Korean Korean-context). These short paraphrases were generated by an LLM (see scripts/generate_simplified_direct_requests.py and scripts/generate_direct_requests.py in the codebase) and then individually reviewed and corrected by human annotators before release. All other prompts, rubrics, translations, and transcreations are human-authored.",
+  "rai:dataPreprocessingProtocol": [
+    "Each task is expanded into 2 variants (Culture Agnostic) or 4 variants (Culture Specific) at load time via rok_fortress_eval/core/data_loader.py:load_and_expand_csv.",
+    "Rubrics are stored as Python-list-formatted strings; loaders parse them into structured YES/NO criteria for tier-weighted scoring (TRS).",
+    "No row-level imputation is performed; rows with task type 'Culture Agnostic' intentionally have empty values in the [EN] Cultural Adapted - * and [KR] Transcreated - * columns."
+  ],
+  "rai:dataAnnotationProtocol": "Each task is paired with an expert-authored rubric of 1-7 binary YES/NO criteria (mean 6.01 per task) capturing operational severity tiers used for the Tier-weighted Risk Score (TRS). Tasks are also tagged with NSPS Risk Domain / Risk Sub-Domain and a 7-dimension harm taxonomy (WHAT, HOW-1/2/3, WHY, WHO/WHERE, WHEN). Harm-dimension tags are produced by an LLM-based classifier (analysis/scripts/classify_harm_dimensions.py) and used downstream for analysis only; they are not the source of TRS scoring.",
+  "rai:annotationsPerItem": "One expert-authored rubric (1-7 YES/NO criteria, mean 6.01) per task; one benign counterpart per task; one simplified direct-request variant per task per language/culture pair (2 variants for culture-agnostic, 4 for culture-specific).",
+  "rai:machineAnnotationTools": [
+    "scripts/classify_harm_dimensions.py (LLM-based 7-dimension harm classifier producing the 'Harm Dimensions' column)."
+  ],
+  "rai:dataUseCases": [
+    "Construct measured: whether the safety behavior of an LLM degrades under (a) shifts in input language and (b) shifts in geopolitical/cultural context, while holding adversarial intent fixed.",
+    "Construct-validity evidence: the controlled transcreation matrix yields 2 (culture-agnostic) or 4 (culture-specific) variants of each task with content held semantically constant, so observed score differences across variants can be attributed to language or context rather than task content. Calibration of the 3-judge scoring ensemble against 1,489 human-labeled rubric items achieves Cohen's κ = 0.874 (raw agreement 94.0%), establishing that the TRS metric tracks human harm judgements.",
+    "Validated use cases: (i) bilingual (English/Korean) LLM safety evaluation; (ii) decomposing safety degradation into linguistic drop (Δ_ling) and contextual drop (Δ_ctx); (iii) measuring tier-weighted risk (TRS) and over-refusal (ORS) of frontier and Korean regional LLMs across 4 NSPS risk domains.",
+    "Out-of-scope uses: (i) generalizing 'cultural context' findings beyond the US/Korea pair; (ii) training data for capability improvements unrelated to safety; (iii) measuring threat models outside the NSPS taxonomy."
+  ],
+  "rai:dataLimitations": [
+    "Coverage is limited to two languages (English, Korean) and two cultural contexts (US, Korea); findings may not generalize to other languages or geopolitical settings.",
+    "Adversarial coverage is anchored to the NSPS taxonomy; threat models outside this taxonomy are out of scope.",
+    "TRS, ORS, and refusal classification depend on a 3-judge LLM ensemble (HyperCLOVA X + o4-mini + Kimi K2; F1 = 0.828 vs human annotations); judge-model upgrades will shift absolute scores even if the prompts are unchanged.",
+    "Korean transcreations reflect a single annotation team's cultural-adaptation choices and are not exhaustive over Korean society.",
+    "The simplified direct-request variant is a single short paraphrase; it is not a systematic paraphrase distribution."
+  ],
+  "rai:dataBiases": [
+    "Risk-domain distribution is non-uniform: CBRNE (251) and Criminal & Financial Illicit Activities (248) dominate, while Information Leakage (83) is under-represented.",
+    "Culture-specific tasks (432) outnumber culture-agnostic tasks (359), so the transcreation-matrix mass leans toward culture-specific behavior.",
+    "Korean is the only non-US cultural context represented; conclusions about 'cultural context drop' should not be generalized to non-Korean contexts without re-evaluation.",
+    "Adversarial prompt-writing style reflects the authoring team's red-teaming conventions and may under-represent prompt styles common to other red-team communities."
+  ],
+  "rai:personalSensitiveInformation": [
+    "No personal or sensitive information about identifiable private individuals is included. Each NeurIPS-listed category is reviewed below:",
+    "Gender: not collected.",
+    "Socio-economic status: not collected.",
+    "Geography: only at the level of public-record geopolitical context (US vs Korea); no individual addresses or coordinates.",
+    "Language: dataset is bilingual (English/Korean) by design; no identifying language data about private speakers is collected.",
+    "Age: not collected.",
+    "Culture: cultural context (US vs Korean) is treated as a public construct, not as data about identifiable individuals.",
+    "Experience or seniority: not collected.",
+    "Health or medical data: not present.",
+    "Political or religious beliefs: prompts may reference public-record geopolitical events and institutions as part of adversarial framing; no beliefs of identifiable private individuals are represented."
+  ],
+  "rai:dataSocialImpact": "ROK-FORTRESS is intended to expose and reduce safety gaps in deployed LLMs, particularly under language and geopolitical-context shifts where prior benchmarks under-measure risk. The dataset contains adversarial prompts designed to elicit unsafe behavior; we release prompts, benign counterparts, and rubrics, but do NOT release any unsafe model completions elicited during evaluation. The intended downstream use is defensive: improving model safety, refusal calibration, and bilingual robustness. Misuse risk is mitigated by (i) the CC-BY-4.0 license requiring attribution, (ii) the rubric-and-tier framing that supports defensive scoring rather than attacker enablement, and (iii) the absence of harmful completions in the release.",
+  "rai:dataReleaseMaintenancePlan": "Released as version 1.0.0 alongside the ROK-FORTRESS paper. The dataset is versioned on Hugging Face at https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public; corrections and clarifications are tracked via the dataset's Hugging Face Community tab. Future revisions will increment the version field of this Croissant descriptor.",
+  "prov:wasDerivedFrom": {
+    "@id": "https://huggingface.co/datasets/ScaleAI/fortress_public",
+    "name": "FORTRESS Public Dataset",
+    "description": "FORTRESS is the source benchmark from which ROK-FORTRESS inherits its NSPS adversarial-task design and the English (US-context) prompts that anchor each transcreation row."
+  },
+  "prov:wasGeneratedBy": [
+    {
+      "@type": "prov:Activity",
+      "name": "Data collection",
+      "description": "Adversarial prompts, benign prompts, and 1-7 binary YES/NO rubrics were authored by US-based experts following the NSPS risk taxonomy. Korean translations and Korean-context transcreations were produced by human translators with native Korean fluency. The Simplified Direct Request Variant for each language/culture pair was LLM-generated and then human-reviewed and corrected.",
+      "prov:atLocation": "United States",
+      "prov:startedAtTime": "2025-10-01",
+      "prov:endedAtTime": "2026-01-31"
+    },
+    {
+      "@type": "prov:Activity",
+      "name": "Preprocessing",
+      "description": "Each task is expanded into 2 variants (Culture Agnostic) or 4 variants (Culture Specific) at load time via rok_fortress_eval/core/data_loader.py:load_and_expand_csv. Rubrics are stored as Python-list-formatted strings; loaders parse them into structured YES/NO criteria for tier-weighted scoring (TRS). No row-level imputation is performed; rows with task type 'Culture Agnostic' intentionally have empty values in the [EN] Cultural Adapted - * and [KR] Transcreated - * columns."
+    },
+    {
+      "@type": "prov:Activity",
+      "name": "Data annotation",
+      "description": "Two annotation passes are reflected in the dataset. (1) Rubric YES/NO criteria capture operational severity tiers used for the Tier-weighted Risk Score (TRS); inter-annotator agreement on rubric verdicts was Cohen's κ = 0.874 with 94.0% raw agreement, calibrated on 266 task-variant pairs covering 1,489 rubric items by 2 human annotators. (2) The 'Harm Dimensions' column carries 7-dimension harm-taxonomy labels (WHAT, HOW-1/2/3, WHY, WHO/WHERE, WHEN) produced by an LLM-based classifier (scripts/classify_harm_dimensions.py); inter-annotator agreement on harm-dimension labels (2 humans on 97 rubrics × 4 variants) was Cohen's κ = 0.57, with the LLM classifier matching either human annotator in 81.9% of cases. Harm-dimension labels are used downstream for analysis only and are NOT the source of TRS scoring."
+    }
+  ],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "rok_fortress_public.tsv",
+      "name": "rok_fortress_public.tsv",
+      "description": "Tab-separated values file containing the 791 ROK-FORTRESS tasks with all language/culture variants.",
+      "contentUrl": "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public/resolve/main/rok_fortress_public.tsv",
+      "encodingFormat": "text/tab-separated-values",
+      "contentSize": "6418191 B",
+      "md5": "0a437ce78449577592c7f44f10ff34e0",
+      "sha256": "aafcdabfe68d2bb52fddfd1c36a7f80062bbcd62860b69c1b2a7f7c6ebab3a31"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "tasks",
+      "name": "tasks",
+      "description": "One row per ROK-FORTRESS task. Each task expands into 2 variants (Culture Agnostic) or 4 variants (Culture Specific) at load time.",
+      "key": {
+        "@id": "tasks/task_id"
+      },
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/task_id",
+          "name": "TASK_ID",
+          "description": "Unique task identifier.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "TASK_ID"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/phase",
+          "name": "Phase",
+          "description": "Dataset phase / version tag.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Phase"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/tactic",
+          "name": "Tactic",
+          "description": "Adversarial tactic class.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Tactic"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/task_type",
+          "name": "Task Type",
+          "description": "'Culture Agnostic' (2 variants per task) or 'Culture Specific' (4 variants per task).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Task Type"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/adversarial_prompt",
+          "name": "Adversarial Prompt",
+          "description": "English (US-context) adversarial prompt.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Adversarial Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/risk_domain",
+          "name": "Risk Domain",
+          "description": "NSPS top-level risk domain (CBRNE; Political Violence & Terrorism; Criminal & Financial Illicit Activities; Information Leakage).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Risk Domain"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/risk_sub_domain",
+          "name": "Risk Sub-Domain",
+          "description": "NSPS risk sub-domain.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Risk Sub-Domain"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/benign_prompt",
+          "name": "Benign Prompt",
+          "description": "English (US-context) benign counterpart prompt used for over-refusal evaluation (ORS).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Benign Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/simplified_direct_request",
+          "name": "Simplified Direct Request Variant",
+          "description": "Short, casual adversarial direct-request variant (English, US-context).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Simplified Direct Request Variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/rubric",
+          "name": "Rubric",
+          "description": "Python-list-formatted string of YES/NO rubric questions used for tier-weighted risk scoring (TRS).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Rubric"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/harm_dimensions",
+          "name": "Harm Dimensions",
+          "description": "7-dimension harm taxonomy labels (WHAT, HOW-1/2/3, WHY, WHO/WHERE, WHEN).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "Harm Dimensions"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_translated_adversarial_prompt",
+          "name": "[KR] Translated - Adversarial Prompt",
+          "description": "Korean-language US-context adversarial prompt (V_Ko_US for culture-specific tasks; V_Ko for culture-agnostic tasks).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Translated - Adversarial Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_translated_benign_prompt",
+          "name": "[KR] Translated - Benign Prompt",
+          "description": "Korean-language US-context benign prompt.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Translated - Benign Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_translated_simplified_direct_request",
+          "name": "[KR] Translated - Simplified Direct Request Variant",
+          "description": "Korean-language US-context simplified direct-request variant.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Translated - Simplified Direct Request Variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_translated_rubric",
+          "name": "[KR] Translated - Rubric",
+          "description": "Korean-language rubric (Python-list-formatted YES/NO questions).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Translated - Rubric"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/en_cultural_adapted_adversarial_prompt",
+          "name": "[EN] Cultural Adapted - Adversarial Prompt",
+          "description": "English Korean-context adversarial prompt (V_En_KR). Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[EN] Cultural Adapted - Adversarial Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/en_cultural_adapted_benign_prompt",
+          "name": "[EN] Cultural Adapted - Benign Prompt",
+          "description": "English Korean-context benign prompt. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[EN] Cultural Adapted - Benign Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/en_cultural_adapted_simplified_direct_request",
+          "name": "[EN] Cultural Adapted - Simplified Direct Request Variant",
+          "description": "English Korean-context simplified direct-request variant. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[EN] Cultural Adapted - Simplified Direct Request Variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/en_cultural_adapted_rubric",
+          "name": "[EN] Cultural Adapted - Rubric",
+          "description": "English Korean-context rubric. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[EN] Cultural Adapted - Rubric"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_transcreated_adversarial_prompt",
+          "name": "[KR] Transcreated - Adversarial Prompt",
+          "description": "Korean-language Korean-context adversarial prompt (V_Ko_KR). Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Transcreated - Adversarial Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_transcreated_benign_prompt",
+          "name": "[KR] Transcreated - Benign Prompt",
+          "description": "Korean-language Korean-context benign prompt. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Transcreated - Benign Prompt"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_transcreated_simplified_direct_request",
+          "name": "[KR] Transcreated - Simplified Direct Request Variant",
+          "description": "Korean-language Korean-context simplified direct-request variant. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Transcreated - Simplified Direct Request Variant"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "tasks/kr_transcreated_rubric",
+          "name": "[KR] Transcreated - Rubric",
+          "description": "Korean-language Korean-context rubric. Populated only for culture-specific tasks.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "rok_fortress_public.tsv"
+            },
+            "extract": {
+              "column": "[KR] Transcreated - Rubric"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "creator": [
+    {
+      "@type": "sc:Person",
+      "name": "Michael S. Lee",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Yash Maurya",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Drew Rein",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Bert Herring",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Jonathan Nguyen",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Kyungho Song",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Korea AI Safety Institute"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Udari Madhushani Sehwag",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Jiyeon Cho",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Korea AI Safety Institute"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Kaustubh Deshpande",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Yeongkyun Jang",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Korea AI Safety Institute"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Jiyeon Joo",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Korea AI Safety Institute"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Minn Seok Choi",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Korea AI Safety Institute"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Evi Fuelle",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Christina Q. Knight",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Joseph Brandifino",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    },
+    {
+      "@type": "sc:Person",
+      "name": "Max Fenkell",
+      "affiliation": {
+        "@type": "sc:Organization",
+        "name": "Scale AI"
+      }
+    }
+  ],
+  "publisher": {
+    "@type": "sc:Organization",
+    "name": "Scale AI",
+    "url": "https://scale.com"
+  }
+}

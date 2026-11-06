@@ -1,0 +1,32 @@
+[project]
+name = "rok-fortress"
+version = "0.1.0"
+description = "ROK-FORTRESS: Extension of FORTRESS benchmark for Korean language and cultural adaptations"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Anonymous Authors" },
+]
+license = { text = "MIT" }
+dependencies = [
+    "easydict>=1.13",
+    "httpx>=0.28.1",
+    "litellm>=1.80.11",
+    "matplotlib>=3.10.8",
+    "openai>=2.0.0",
+    "pandas>=2.3.3",
+    "pyarrow>=21.0.0",
+    "pydantic>=2.11.9",
+    "python-dotenv>=1.1.1",
+    "seaborn>=0.13.2",
+    "tenacity>=9.1.2",
+    "vllm==0.13.0",
+]
+
+[project.urls]
+Repository = "<REPO_URL>"
+Dataset = "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+

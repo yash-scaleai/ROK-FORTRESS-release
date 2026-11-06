@@ -1,0 +1,97 @@
+# Model configurations for ROK-FORTRESS evaluations
+# Per-model settings consumed by the response-collection scripts (scripts/collect_*.py).
+#
+# The judge panel default lives in rok_fortress_eval/core/config.py
+# (HyperCLOVA X + o4-mini + Kimi K2). It is intentionally NOT set here.
+
+defaults:
+  concurrency: 100
+  timeout: 180
+  reasoning_effort: medium
+
+models:
+  # ============================================================================
+  # API Models (remote inference)
+  # ============================================================================
+  gpt52:
+    name: openai/gpt-5.2
+    type: api
+    description: "OpenAI GPT-5.2"
+
+  o4mini:
+    name: openai/o4-mini
+    type: api
+    description: "OpenAI o4-mini reasoning model"
+
+  opus:
+    name: anthropic/claude-opus-4-5
+    type: api
+    description: "Anthropic Claude Opus 4.5"
+
+  sonnet:
+    name: anthropic/claude-sonnet-4-5
+    type: api
+    description: "Anthropic Claude Sonnet 4.5"
+
+  gemini:
+    name: gemini/gemini-3-pro-preview
+    type: api
+    description: "Google Gemini 3 Pro Preview"
+
+  kimi:
+    name: fireworks_ai/kimi-k2-thinking
+    type: api
+    description: "Moonshot Kimi K2 Thinking (via Fireworks)"
+
+  llama4:
+    name: fireworks_ai/llama4-maverick-instruct-basic
+    type: api
+    description: "Meta Llama 4 Maverick (via Fireworks)"
+
+  deepseek:
+    name: fireworks_ai/deepseek-v3p2
+    type: api
+    description: "DeepSeek V3.2 (via Fireworks)"
+
+  mistral:
+    name: bedrock/mistral.mistral-large-3-675b-instruct
+    type: api
+    description: "Mistral Large 3 675B (via Bedrock)"
+
+  qwen3:
+    name: bedrock/qwen.qwen3-235b-a22b-2507-v1:0
+    type: api
+    description: "Qwen 3 235B (via Bedrock)"
+
+  # ============================================================================
+  # vLLM Models (local inference with GPU)
+  # ============================================================================
+  hyperclovax:
+    name: naver-hyperclovax/HyperCLOVAX-SEED-Think-32B
+    type: vllm
+    tensor_parallel: 2
+    description: "Naver HyperCLOVA X SEED Think 32B (used in default judge panel)"
+
+  exaone:
+    name: LGAI-EXAONE/K-EXAONE-236B-A23B
+    type: vllm
+    tensor_parallel: 4
+    description: "LG AI K-EXAONE 236B MoE (23B active) with reasoning"
+
+  kanana2:
+    name: kakaocorp/kanana-2-30b-a3b-thinking
+    type: vllm
+    tensor_parallel: 2
+    description: "Kakao Kanana-2 30B MoE (3B active) with reasoning"
+
+  solar:
+    name: upstage/Solar-Open-100B
+    type: vllm
+    tensor_parallel: 2
+    description: "Upstage Solar-Open 100B"
+
+  ax:
+    name: skt/A.X-K1
+    type: vllm
+    tensor_parallel: 8
+    description: "SK Telecom A.X-K1 519B MoE (33B active) with controllable reasoning"

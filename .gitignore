@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+.venv_*/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Run outputs (user-generated)
+runs/
+logs/
+vllm_logs/
+results/
+
+refs/
+
+# Data: ignore everything except the public release files
+data/*
+!data/rok_fortress_public.tsv
+!data/README.md
+!data/croissant.json
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Build/cache
+.cache/
+.tmp_*/
+
+# Local-only
+local_lib/
+external/
+
+# Backup/temp data files
+*.bak
+*.pre_strip_bak
+.claude/

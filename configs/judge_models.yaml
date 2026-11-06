@@ -1,0 +1,125 @@
+# Judge Model Configurations for Calibration Study
+# Defines models used for judge calibration against human baseline
+
+defaults:
+  parsing_model: gemini/gemini-2.0-flash
+  timeout: 180
+  concurrency: 30  # Per-model concurrency for API models
+
+# ============================================================================
+# API Models (Global - Western)
+# ============================================================================
+api_models:
+  - name: openai/gpt-5.2
+    type: api
+    reasoning: true
+    culture: western
+    description: "OpenAI GPT-5.2 with reasoning"
+  
+  - name: openai/o4-mini
+    type: api
+    reasoning: true
+    culture: western
+    description: "OpenAI O4-mini (older reasoning model)"
+  
+  - name: anthropic/claude-opus-4-5
+    type: api
+    reasoning: true
+    controllable: true
+    culture: western
+    description: "Claude Opus 4.5 with controllable reasoning"
+  
+  - name: anthropic/claude-sonnet-4-5
+    type: api
+    reasoning: true
+    controllable: true
+    culture: western
+    description: "Claude Sonnet 4.5 with controllable reasoning"
+  
+  - name: gemini/gemini-3-pro-preview
+    type: api
+    reasoning: true
+    culture: western
+    description: "Gemini 3 Pro Preview with reasoning"
+  
+  - name: fireworks_ai/llama4-maverick-instruct-basic
+    type: api
+    reasoning: false
+    culture: western
+    description: "Llama 4 Maverick (older, standard)"
+  
+  - name: fireworks_ai/kimi-k2-thinking
+    type: api
+    reasoning: true
+    culture: western
+    description: "Kimi K2 with thinking mode"
+  
+  - name: bedrock/qwen.qwen3-235b-a22b-2507-v1:0
+    type: api
+    reasoning: true
+    controllable: true
+    culture: eastern
+    description: "Qwen 3 235B MoE with controllable reasoning"
+  
+  - name: fireworks_ai/deepseek-v3p2
+    type: api
+    reasoning: false
+    culture: eastern
+    description: "DeepSeek V3.2"
+  
+  - name: bedrock/mistral.mistral-large-3-675b-instruct
+    type: api
+    reasoning: false
+    culture: western
+    description: "Mistral Large 3 675B"
+
+# ============================================================================
+# Korean vLLM Models (Local Inference)
+# ============================================================================
+korean_vllm_models:
+  - name: vllm/naver-hyperclovax/HyperCLOVAX-SEED-Think-32B
+    type: vllm
+    model_key: hyperclovax
+    tensor_parallel: 2
+    gpus: 2
+    reasoning: true
+    controllable: true
+    culture: korean
+    description: "Naver HyperCLOVA X SEED Think 32B"
+  
+  - name: vllm/kakaocorp/kanana-2-30b-a3b-thinking
+    type: vllm
+    model_key: kanana-2
+    tensor_parallel: 2
+    gpus: 2
+    reasoning: true
+    culture: korean
+    description: "Kakao Kanana-2 30B MoE with thinking"
+  
+  - name: vllm/upstage/Solar-Open-100B
+    type: vllm
+    model_key: solar-open
+    tensor_parallel: 2
+    gpus: 2
+    reasoning: false
+    culture: korean
+    description: "Upstage Solar-Open 100B MoE"
+  
+  - name: vllm/LGAI-EXAONE/K-EXAONE-236B-A23B
+    type: vllm
+    model_key: k-exaone
+    tensor_parallel: 4
+    gpus: 4
+    reasoning: true
+    culture: korean
+    description: "LG AI K-EXAONE 236B MoE"
+  
+  - name: vllm/skt/A.X-K1
+    type: vllm
+    model_key: a.x-k1
+    tensor_parallel: 8
+    gpus: 8
+    reasoning: true
+    controllable: true
+    culture: korean
+    description: "SK Telecom A.X-K1 519B MoE"

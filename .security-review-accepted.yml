@@ -1,0 +1,14 @@
+- id: SEC-002
+  finding: "Employee work email in README (Authors/contact section)"
+  severity: HIGH
+  rationale: "Intentional public attribution; same contact address as the published NeurIPS 2026 paper"
+  approved_by: "yash.maurya@scale.com"
+  approved_on: 2026-11-06
+  expires: 2027-11-06
+- id: SEC-003
+  finding: "Employee email in commit author/committer metadata"
+  severity: MEDIUM
+  rationale: "Matches the intentional public attribution in README and the paper"
+  approved_by: "yash.maurya@scale.com"
+  approved_on: 2026-11-06
+  expires: 2027-11-06

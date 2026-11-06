@@ -5,7 +5,7 @@ Replication of the MultiJail experiment (ICLR 2024) to test whether the unsafe r
 ## Reference
 
 - **Paper**: "Multilingual Jailbreak Challenges in Large Language Models" (Deng et al., 2024)
-- **Dataset**: https://github.com/DAMO-NLP-SG/multilingual-safety-for-LLMs
+- **Dataset**: https://github.com/DAMO-NLP-SG/multilingual-safety-for-LLMs (MIT; bundled copy `MultiJail.csv`, see `THIRD_PARTY_NOTICES.md`)
 - **Published**: ICLR 2024
 
 ## Hypothesis

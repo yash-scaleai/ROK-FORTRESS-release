@@ -25,7 +25,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/yash-scaleai/ROK-FORTRESS-release"
+Repository = "https://github.com/scaleapi/ROK-FORTRESS"
 Dataset = "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public"
 
 [project.optional-dependencies]

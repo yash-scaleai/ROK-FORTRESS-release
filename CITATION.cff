@@ -51,7 +51,7 @@ authors:
     family-names: "Fenkell"
     affiliation: "Scale AI"
 license: MIT
-repository-code: "https://github.com/yash-scaleai/ROK-FORTRESS-release"
+repository-code: "https://github.com/scaleapi/ROK-FORTRESS"
 url: "https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public"
 identifiers:
   - type: other

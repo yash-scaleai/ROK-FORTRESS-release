@@ -133,8 +133,9 @@ def plot_quadrant(
     ors_scores: Dict[str, float],
     title: str,
     output_name: str,
+    label_pos: Dict[str, Tuple[float, float, str]] = None,
 ) -> List[Path]:
-    """Create a single quadrant plot."""
+    """Create a single quadrant plot. label_pos: model -> (trs, ors, ha) text position, drawn with a leader line."""
     setup_paper_style()
 
     fig, ax = plt.subplots(figsize=(12, 10))
@@ -192,6 +193,15 @@ def plot_quadrant(
 
     # Add labels with smart positioning
     for p in points:
+        if label_pos and p["model"] in label_pos:
+            tx, ty, tha = label_pos[p["model"]]
+            txt = ax.annotate(
+                p["display"], (p["trs"], p["ors"]), xytext=(tx, ty), textcoords="data",
+                ha=tha, va="center", fontsize=9, fontweight="medium", zorder=10,
+                arrowprops=dict(arrowstyle="-", color="#999999", lw=0.6, shrinkA=2, shrinkB=7),
+            )
+            txt.set_path_effects([path_effects.withStroke(linewidth=3, foreground="white")])
+            continue
         # Offset based on position relative to median
         x_off = 8 if p["trs"] < median_trs else -8
         y_off = 8 if p["ors"] < median_ors else -8
@@ -243,6 +253,19 @@ def plot_quadrant(
     return save_figure(fig, output_name, formats=("pdf",))
 
 
+# Hand-placed labels for the crowded lower-right cluster of the overall plot (data coords).
+# Re-tune if the underlying TRS/ORS values move.
+OVERALL_LABEL_POS = {
+    "qwen.qwen3-235b-a22b-2507-v1:0": (45.0, 7.85, "center"),
+    "mistral.mistral-large-3-675b-instruct": (56.0, 7.05, "right"),
+    "kimi-k2-thinking": (45.8, 3.6, "right"),
+    "kexaone": (41.5, 2.85, "right"),
+    "gemini-3-pro-preview": (41.5, 2.1, "right"),
+    "hyperclovax": (49.4, 2.85, "left"),
+    "kanana2": (47.3, 1.45, "right"),
+}
+
+
 def main():
     """Generate all quadrant plots."""
     print("Loading judgements...")
@@ -281,7 +304,8 @@ def main():
     plot_quadrant(
         models, overall_trs, overall_ors,
         "Model Safety-Utility Trade-off: TRS vs ORS (Overall)",
-        "fig_quadrant_overall"
+        "fig_quadrant_overall",
+        label_pos=OVERALL_LABEL_POS,
     )
 
     # Plot per variant

@@ -435,6 +435,8 @@ class InteractionAnalysis(BaseExperiment):
             if int_kr.is_significant:
                 y_pos = ling_kr_values[i] + ling_kr_ci[i] + 2
                 ax1.annotate("*", xy=(x[i] + width/2, y_pos), ha="center", fontsize=14, color="coral")
+        ax1.set_ylim(top=max(max(v + e for v, e in zip(ling_us_values, ling_us_ci)),
+                             max(v + e for v, e in zip(ling_kr_values, ling_kr_ci))) + 5)
         
         ax1.set_ylabel("Drop value")
         ax1.set_xlabel("Model")
@@ -509,6 +511,8 @@ class InteractionAnalysis(BaseExperiment):
                 ax2.annotate("*", xy=(x_pos, i), ha="left" if val >= 0 else "right",
                             va="center", fontsize=14, fontweight="bold", color=colors[i],
                             annotation_clip=False)
+                lo, hi = ax2.get_xlim()
+                ax2.set_xlim(min(lo, x_pos - 1), max(hi, x_pos + 1))
         
         # Add legend
         from matplotlib.patches import Patch

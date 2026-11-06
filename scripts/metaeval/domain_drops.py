@@ -4,9 +4,9 @@
 Δling(CS)  = ½[(EnUS−KoUS) + (EnKR−KoKR)] on complete-4 CS tasks    (rebuttal W1)
 Δctx       = ½[(EnUS−EnKR) + (KoUS−KoKR)] on complete-4 CS tasks    (Def 3.2 eq. 2)
 Pooled over paired (task, model) differences; percentile bootstrap 95% CI, 2,000 resamples, seed 42.
-Also caches S/domain to scores_cache.pkl for later scripts.
+Caches scores to results/scores_cache.json for later runs.
 """
-import pickle, sys
+import json, sys
 from collections import defaultdict
 from pathlib import Path
 import numpy as np
@@ -18,9 +18,10 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(Path.cwd()))
 from scripts.metaeval.recompute_ling_ctx_drops import load, scores, task_sets, EN_US, KO_US, EN_KR, KO_KR
 
-cache = Path("results/scores_cache.pkl")
+cache = Path("results/scores_cache.json")
 if cache.exists():
-    S, Su, ca, cs, dom = pickle.loads(cache.read_bytes())
+    c = json.loads(cache.read_text())
+    S, Su, ca, cs, dom = c["S"], c["Su"], set(c["ca"]), set(c["cs"]), c["dom"]
 else:
     data = load()
     ca, cs = task_sets(data)
@@ -32,7 +33,7 @@ else:
                 assert dom.setdefault(r.task_id, r.risk_domain) == r.risk_domain
     missing = (ca | cs) - set(dom)
     assert not missing, f"tasks with no domain: {len(missing)}"
-    cache.write_bytes(pickle.dumps((S, Su, ca, cs, dom)))
+    cache.write_text(json.dumps({"S": S, "Su": Su, "ca": sorted(ca), "cs": sorted(cs), "dom": dom}))
 
 SHORT = {"Chemical, Biological, Radiological, Nuclear, and Explosive (CBRNE)": "CBRNE",
          "Political Violence & Terrorism": "Political Violence",

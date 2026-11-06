@@ -2,6 +2,8 @@
 
 **Measuring the Effect of Geopolitical Transcreation for National Security and Public Safety**
 
+[Paper (arXiv)](https://arxiv.org/abs/2605.14152) · [Dataset (Hugging Face)](https://huggingface.co/datasets/ScaleAI/ROK-FORTRESS_public) · [Blog post](https://scale.com/blog/rok-fortress-multilingual-ai-safety)
+
 ROK-FORTRESS is a bilingual safety benchmark that separates the effects of language and geopolitical grounding on LLM safety behavior. Building on [FORTRESS](https://arxiv.org/pdf/2506.14922), we use a **transcreation matrix** to evaluate adversarial prompts under controlled combinations of language (English vs Korean) and cultural context (US vs Korean entities and institutions).
 
 <p align="center">
